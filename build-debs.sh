@@ -51,6 +51,7 @@ id
 podman run \
   --rm \
   --userns=keep-id \
+  --security-opt=seccomp=unconfined \
   -v "${SCRIPT_DIR}:/opt/potassium:rw" \
   -e "DEBIAN_VERSION=${DEBIAN_VERSION}" \
   -e "DEBUG=true" \
