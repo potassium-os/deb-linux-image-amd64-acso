@@ -106,7 +106,7 @@ for set in "\${TOP_DIR}"/patch/*; do
     	echo "Applying \${patch}"
     	patch -p1 --forward -i \${patch}
     done
-  else
+  elif [ -f "\${set}"/*.patch ]; then
     for patch in "\${set}"/*.patch; do
     	echo "Applying \${patch}"
     	patch -p1 --forward -i \${patch}
