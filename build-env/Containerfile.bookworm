@@ -151,4 +151,5 @@ USER builder
 
 WORKDIR /opt/potassium
 
+# to bash
 CMD /bin/bash
