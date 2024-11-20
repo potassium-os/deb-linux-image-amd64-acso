@@ -25,8 +25,6 @@ DEBIAN_VERSIONS=("trixie" "bookworm" "bullseye")
 
 export KERNEL_TAG="master"
 
-podman login ghcr.io
-
 # run each build step
 for DEBIAN_VERSION in "${DEBIAN_VERSIONS[@]}"; do
   export DEBIAN_VERSION
