@@ -143,12 +143,6 @@ RUN set -exu \
     xz-utils \
   && mkdir -p /opt/potassium
 
-RUN set -exu \
-  && groupadd --gid 1000 builder \
-  && useradd --uid 1000 --gid builder --shell /bin/bash builder
-
-USER builder
-
 WORKDIR /opt/potassium
 
 # to bash

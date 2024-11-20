@@ -46,9 +46,11 @@ export CONTAINER_IMAGE="ghcr.io/potassium-os/deb-linux-image-amd64-acso"
 
 # Make the toast
 
+id
+
 podman run \
   --rm \
-  --userns keep-id:uid=1000:gid=1000 \
+  --userns=keep-id \
   -v "${SCRIPT_DIR}:/opt/potassium:rw" \
   -e "DEBIAN_VERSION=${DEBIAN_VERSION}" \
   -e "DEBUG=true" \
