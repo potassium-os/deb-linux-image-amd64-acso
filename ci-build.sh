@@ -25,6 +25,8 @@ DEBIAN_VERSIONS=("trixie" "bookworm" "bullseye")
 
 export KERNEL_TAG="master"
 
+podman --version
+
 # run each build step
 for DEBIAN_VERSION in "${DEBIAN_VERSIONS[@]}"; do
   export DEBIAN_VERSION
