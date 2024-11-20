@@ -30,7 +30,7 @@ jobs:
       id: build-trixie
       uses: redhat-actions/buildah-build@v2
       with:
-        image: "${{ env.IMAGE_REGISTRY }}/deb-linux-image-amd64-acso"
+        image: "deb-linux-image-amd64-acso"
         tags: latest-trixie ${{ github.sha }}-trixie
         containerfiles: |
           ./build-env/Containerfile.trixie
@@ -40,7 +40,7 @@ jobs:
       id: build-bookworm
       uses: redhat-actions/buildah-build@v2
       with:
-        image: "${{ env.IMAGE_REGISTRY }}/deb-linux-image-amd64-acso"
+        image: "deb-linux-image-amd64-acso"
         tags: latest-bookworm ${{ github.sha }}-bookworm
         containerfiles: |
           ./build-env/Containerfile.bookworm
@@ -50,7 +50,7 @@ jobs:
       id: build-bullseye
       uses: redhat-actions/buildah-build@v2
       with:
-        image: "${{ env.IMAGE_REGISTRY }}/deb-linux-image-amd64-acso"
+        image: "deb-linux-image-amd64-acso"
         tags: latest-bullseye ${{ github.sha }}-bullseye
         containerfiles: |
           ./build-env/Containerfile.bullseye
