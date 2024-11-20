@@ -24,7 +24,7 @@ jobs:
         registry: ${{ env.IMAGE_REGISTRY }}
 
     - name: Build Debs
-      run: ./ci-build.sh
+      run: /bin/bash ./ci-build.sh
 
     - name: Upload Debs
       uses: actions/upload-artifact@v4
