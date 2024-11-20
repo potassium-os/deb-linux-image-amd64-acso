@@ -13,6 +13,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Increase disk space (Ubuntu)
+      uses: fcbg-platforms/increase-disk-space@latest
+      with:
+        android: true
+        dotnet: true
+        haskell: true
+        large-packages: true
+        old-dotnet: true
+
     - name: Checkout code
       uses: actions/checkout@v4
 
