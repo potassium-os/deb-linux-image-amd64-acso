@@ -1,5 +1,6 @@
 name: Build Build Envs
 on:
+  workflow_dispatch: {}
   push:
     paths:
       - build-env/**
@@ -26,28 +27,58 @@ jobs:
         registry: ${{ env.IMAGE_REGISTRY }}
 
     - name: Build Build Env - Trixie
+      id: build-trixie
       uses: redhat-actions/buildah-build@v2
       with:
-        image: "ghcr.io/potassium-os/deb-linux-image-amd64-acso"
+        image: "${{ env.IMAGE_REGISTRY }}/deb-linux-image-amd64-acso"
         tags: latest-trixie ${{ github.sha }}-trixie
         containerfiles: |
           ./build-env/Containerfile.trixie
         context: ./build-env/trixie
 
     - name: Build Build Env - Bookworm
+      id: build-bookworm
       uses: redhat-actions/buildah-build@v2
       with:
-        image: "ghcr.io/potassium-os/deb-linux-image-amd64-acso"
+        image: "${{ env.IMAGE_REGISTRY }}/deb-linux-image-amd64-acso"
         tags: latest-bookworm ${{ github.sha }}-bookworm
         containerfiles: |
           ./build-env/Containerfile.bookworm
         context: ./build-env/bookworm
 
     - name: Build Build Env - Bullseye
+      id: build-bullseye
       uses: redhat-actions/buildah-build@v2
       with:
-        image: "ghcr.io/potassium-os/deb-linux-image-amd64-acso"
+        image: "${{ env.IMAGE_REGISTRY }}/deb-linux-image-amd64-acso"
         tags: latest-bullseye ${{ github.sha }}-bullseye
         containerfiles: |
           ./build-env/Containerfile.bullseye
         context: ./build-env/bullseye
+
+    - name: Push To ghcr.io
+      uses: redhat-actions/push-to-registry@v2
+      with:
+        image: ${{ steps.build-trixie.outputs.image }}
+        tags: ${{ steps.build-trixie.outputs.tags }}
+        username: ${{ env.REGISTRY_USER }}
+        password: ${{ env.REGISTRY_PASSWORD }}
+        registry: ${{ env.IMAGE_REGISTRY }}
+
+    - name: Push To ghcr.io
+      uses: redhat-actions/push-to-registry@v2
+      with:
+        image: ${{ steps.build-bookworm.outputs.image }}
+        tags: ${{ steps.build-bookworm.outputs.tags }}
+        username: ${{ env.REGISTRY_USER }}
+        password: ${{ env.REGISTRY_PASSWORD }}
+        registry: ${{ env.IMAGE_REGISTRY }}
+
+    - name: Push To ghcr.io
+      uses: redhat-actions/push-to-registry@v2
+      with:
+        image: ${{ steps.build-bullseye.outputs.image }}
+        tags: ${{ steps.build-bullseye.outputs.tags }}
+        username: ${{ env.REGISTRY_USER }}
+        password: ${{ env.REGISTRY_PASSWORD }}
+        registry: ${{ env.IMAGE_REGISTRY }}
