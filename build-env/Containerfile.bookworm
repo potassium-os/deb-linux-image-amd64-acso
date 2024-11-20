@@ -1,0 +1,154 @@
+FROM docker.io/debian:bookworm-slim
+
+USER root
+
+COPY debian.sources /etc/apt/sources.list.d/debian.sources
+
+RUN set -exu \
+  && export DEBIAN_FRONTEND=noninteractive \
+  && apt-get -yq update \
+  && apt-get -yq install \
+    build-essential \
+    bash \
+    git \
+    curl \
+    wget \
+    devscripts \
+    flex \
+    bison \
+    libelf1 \
+    libdwarf++0 \
+    libelf++0 \
+    libelf-dev \
+    libelfin-dev \
+    libcurl4-openssl-dev \
+    dwarves \
+    pahole \
+    bc \
+    libssl-dev \
+    autoconf \
+    automake \
+    autopoint \
+    autotools-dev \
+    binutils \
+    binutils-common \
+    binutils-x86-64-linux-gnu \
+    bsdextrautils \
+    build-essential \
+    bzip2 \
+    cpio \
+    cpp \
+    cpp-12 \
+    debhelper \
+    dh-autoreconf \
+    dh-exec \
+    dh-strip-nondeterminism \
+    dpkg-dev \
+    dwz \
+    file \
+    g++ \
+    g++-12 \
+    gcc \
+    gcc-12 \
+    gettext \
+    gettext-base \
+    groff-base \
+    initramfs-tools \
+    initramfs-tools-core \
+    intltool-debian \
+    kernel-wedge \
+    klibc-utils \
+    kmod \
+    libarchive-zip-perl \
+    libasan8 \
+    libatomic1 \
+    libbinutils \
+    libc-dev-bin \
+    libc6-dev \
+    libcc1-0 \
+    libcrypt-dev \
+    libctf-nobfd0 \
+    libctf0 \
+    libdebhelper-perl \
+    libdpkg-perl \
+    libelf1 \
+    libexpat1 \
+    libfile-stripnondeterminism-perl \
+    libgcc-12-dev \
+    libgdbm-compat4 \
+    libgdbm6 \
+    libgomp1 \
+    libgprofng0 \
+    libgssapi-krb5-2 \
+    libicu72 \
+    libisl23 \
+    libitm1 \
+    libjansson4 \
+    libk5crypto3 \
+    libkeyutils1 \
+    libklibc \
+    libkmod2 \
+    libkrb5-3 \
+    libkrb5support0 \
+    liblsan0 \
+    libmagic-mgc \
+    libmagic1 \
+    libmpc3 \
+    libmpfr6 \
+    libnsl-dev \
+    libnsl2 \
+    libperl5.36 \
+    libpipeline1 \
+    libpopt0 \
+    libpython3-stdlib \
+    libpython3.11-minimal \
+    libpython3.11-stdlib \
+    libquadmath0 \
+    libreadline8 \
+    libsqlite3-0 \
+    libssl3 \
+    libstdc++-12-dev \
+    libsub-override-perl \
+    libtirpc-common \
+    libtirpc-dev \
+    libtirpc3 \
+    libtool \
+    libtsan2 \
+    libubsan1 \
+    libuchardet0 \
+    libxml2 \
+    linux-base \
+    linux-libc-dev \
+    linux-support-6.1.0-27 \
+    m4 \
+    make \
+    man-db \
+    media-types \
+    patch \
+    perl \
+    perl-modules-5.36 \
+    po-debconf \
+    python3 \
+    python3-jinja2 \
+    python3-markupsafe \
+    python3-minimal \
+    python3.11 \
+    python3.11-minimal \
+    readline-common \
+    rpcsvc-proto \
+    rsync \
+    sbsigntool \
+    sensible-utils \
+    udev \
+    xz-utils \
+  && mkdir -p /opt/potassium
+
+RUN set -exu \
+  && groupadd --gid 1000 builder \
+  && useradd --uid 1000 --gid builder --shell /bin/bash builder
+
+USER builder
+
+WORKDIR /opt/potassium
+
+CMD /bin/bash

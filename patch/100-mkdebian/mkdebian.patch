@@ -1,0 +1,30 @@
+diff --git a/scripts/package/mkdebian b/scripts/package/mkdebian
+index fc3b7fa70..b2667b2f8 100755
+--- a/scripts/package/mkdebian
++++ b/scripts/package/mkdebian
+@@ -122,9 +122,6 @@ gen_source ()
+ 	fi
+ }
+ 
+-rm -rf debian
+-mkdir debian
+-
+ user=${KBUILD_BUILD_USER:-$(id -nu)}
+ name=${DEBFULLNAME:-${user}}
+ if [ "${DEBEMAIL:+set}" ]; then
+@@ -181,15 +178,6 @@ echo $debarch > debian/arch
+ 
+ host_gnu=$(dpkg-architecture -a "${debarch}" -q DEB_HOST_GNU_TYPE | sed 's/_/-/g')
+ 
+-# Generate a simple changelog template
+-cat <<EOF > debian/changelog
+-$sourcename ($packageversion) $distribution; urgency=low
+-
+-  * Custom built Linux kernel.
+-
+- -- $maintainer  $(date -R)
+-EOF
+-
+ # Generate a control file
+ cat <<EOF > debian/control
+ Source: $sourcename

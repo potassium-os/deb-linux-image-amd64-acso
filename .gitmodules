@@ -1,0 +1,3 @@
+[submodule "patch/linux-acs-override"]
+	path = patch/90-linux-acs-override
+	url = https://github.com/potassium-os/linux-acs-override.git

@@ -1,0 +1,33 @@
+name: Build Debs
+on:
+  - workflow_dispatch
+
+env:
+  REGISTRY_USER: ${{ github.actor }}
+  REGISTRY_PASSWORD: ${{ github.token }}
+  IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
+
+jobs:
+  build:
+    name: Build Debs
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Log in to ghcr.io
+      uses: redhat-actions/podman-login@v1
+      with:
+        username: ${{ env.REGISTRY_USER }}
+        password: ${{ env.REGISTRY_PASSWORD }}
+        registry: ${{ env.IMAGE_REGISTRY }}
+
+    - name: Build Debs
+      run: ./ci-build.sh
+
+    - name: Upload Debs
+      uses: actions/upload-artifact@v4
+      with:
+        name: output
+        path: ./output/

@@ -1,0 +1,53 @@
+name: Build Build Envs
+on:
+  push:
+    paths:
+      - build-env/**
+
+env:
+  REGISTRY_USER: ${{ github.actor }}
+  REGISTRY_PASSWORD: ${{ github.token }}
+  IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
+
+jobs:
+  build:
+    name: Build Build Envs
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Log in to ghcr.io
+      uses: redhat-actions/podman-login@v1
+      with:
+        username: ${{ env.REGISTRY_USER }}
+        password: ${{ env.REGISTRY_PASSWORD }}
+        registry: ${{ env.IMAGE_REGISTRY }}
+
+    - name: Build Build Env - Trixie
+      uses: redhat-actions/buildah-build@v2
+      with:
+        image: "ghcr.io/potassium-os/deb-linux-image-amd64-acso"
+        tags: latest-trixie ${{ github.sha }}-trixie
+        containerfiles: |
+          ./build-env/Containerfile.trixie
+        context: ./build-env/trixie
+
+    - name: Build Build Env - Bookworm
+      uses: redhat-actions/buildah-build@v2
+      with:
+        image: "ghcr.io/potassium-os/deb-linux-image-amd64-acso"
+        tags: latest-bookworm ${{ github.sha }}-bookworm
+        containerfiles: |
+          ./build-env/Containerfile.bookworm
+        context: ./build-env/bookworm
+
+    - name: Build Build Env - Bullseye
+      uses: redhat-actions/buildah-build@v2
+      with:
+        image: "ghcr.io/potassium-os/deb-linux-image-amd64-acso"
+        tags: latest-bullseye ${{ github.sha }}-bullseye
+        containerfiles: |
+          ./build-env/Containerfile.bullseye
+        context: ./build-env/bullseye

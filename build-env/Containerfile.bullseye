@@ -1,0 +1,141 @@
+FROM docker.io/debian:bullseye-slim
+
+USER root
+
+COPY sources.list /etc/apt/sources.list
+
+RUN set -exu \
+  && export DEBIAN_FRONTEND=noninteractive \
+  && apt-get -yq update \
+  && apt-get -yq install \
+    build-essential \
+    bash \
+    git \
+    curl \
+    wget \
+    devscripts \
+    flex \
+    bison \
+    libelf1 \
+    libdwarf++0 \
+    libelf++0 \
+    libelf-dev \
+    libelfin-dev \
+    libcurl4-openssl-dev \
+    dwarves \
+    bc \
+    libssl-dev \
+    autoconf \
+    automake \
+    autopoint \
+    autotools-dev \
+    binutils \
+    binutils-common \
+    binutils-x86-64-linux-gnu \
+    bsdextrautils \
+    build-essential \
+    bzip2 \
+    cpio \
+    cpp \
+    cpp-10 \
+    debhelper \
+    dh-autoreconf \
+    dh-strip-nondeterminism \
+    dpkg-dev \
+    dwz \
+    file \
+    g++ \
+    g++-10 \
+    gcc \
+    gcc-10 \
+    gettext \
+    gettext-base \
+    groff-base \
+    initramfs-tools \
+    initramfs-tools-core \
+    intltool-debian \
+    kernel-wedge \
+    klibc-utils \
+    kmod \
+    libarchive-zip-perl \
+    libasan6 \
+    libatomic1 \
+    libbinutils \
+    libc-dev-bin \
+    libc6-dev \
+    libcc1-0 \
+    libcrypt-dev \
+    libctf-nobfd0 \
+    libctf0 \
+    libdebhelper-perl \
+    libdpkg-perl \
+    libelf1 \
+    libexpat1 \
+    libfile-stripnondeterminism-perl \
+    libgcc-10-dev \
+    libgdbm-compat4 \
+    libgdbm6 \
+    libgomp1 \
+    libicu67 \
+    libisl23 \
+    libitm1 \
+    libklibc \
+    libkmod2 \
+    liblsan0 \
+    libmagic-mgc \
+    libmagic1 \
+    libmpc3 \
+    libmpdec3 \
+    libmpfr6 \
+    libnsl-dev \
+    libperl5.32 \
+    libpipeline1 \
+    libpopt0 \
+    libpython3-stdlib \
+    libpython3.9-minimal \
+    libpython3.9-stdlib \
+    libquadmath0 \
+    libreadline8 \
+    libsigsegv2 \
+    libsqlite3-0 \
+    libstdc++-10-dev \
+    libsub-override-perl \
+    libtirpc-dev \
+    libtool \
+    libtsan0 \
+    libubsan1 \
+    libuchardet0 \
+    libxml2 \
+    linux-base \
+    linux-kbuild-5.10 \
+    linux-libc-dev \
+    linux-support-5.10.0-33 \
+    m4 \
+    make \
+    man-db \
+    media-types \
+    patch \
+    perl \
+    perl-modules-5.32 \
+    po-debconf \
+    python3 \
+    python3-minimal \
+    python3.9 \
+    python3.9-minimal \
+    readline-common \
+    rsync \
+    sbsigntool \
+    sensible-utils \
+    udev \
+    xz-utils \
+  && mkdir -p /opt/potassium
+
+RUN set -exu \
+  && groupadd --gid 1000 builder \
+  && useradd --uid 1000 --gid builder --shell /bin/bash builder
+
+USER builder
+
+WORKDIR /opt/potassium
+
+CMD /bin/bash
