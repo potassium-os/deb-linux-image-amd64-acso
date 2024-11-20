@@ -49,6 +49,7 @@ export CONTAINER_IMAGE="ghcr.io/potassium-os/deb-linux-image-amd64-acso"
 podman run \
   --rm \
   -it \
+  --user builder \
   -v "${SCRIPT_DIR}:/opt/potassium:rw" \
   -e "DEBIAN_VERSION=${DEBIAN_VERSION}" \
   -e "DEBUG=true" \
